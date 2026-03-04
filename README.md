@@ -2,6 +2,19 @@
 
 A LaTeX package that provides **theorem-style boxes** (definition, theorem, lemma, proof, etc.) with smooth rounded corners, consistent colors, and light decoration. Built with **tcolorbox** and **TikZ**.
 
+## Preview
+
+Rendered from `examples/vimtex_logicbox.tex`:
+
+**Page 1 — Definitions and title**
+![Definitions](images/overview.png)
+
+**Page 2 — Theorems, lemmas, corollaries, propositions**
+![Theorems](images/theorems.png)
+
+**Page 3 — Proof (with multi-line math)**
+![Proof](images/proof.png)
+
 ## Features
 
 - **Environments**: `definition`, `theorem`, `lemma`, `corollary`, `axiom`, `proposition`, `property`, `remark`, `example`, `exercise`, `solution`, `conjecture`, and `proof`.
