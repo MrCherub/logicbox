@@ -11,9 +11,11 @@ Rendered from `examples/vimtex_logicbox.tex`:
 <img width="458" height="623" alt="Screenshot 2026-03-04 at 12 33 15 AM" src="https://github.com/user-attachments/assets/3c55dd7c-e144-4c2e-9e73-85cf524d76af" />
 
 **Page 2 — Theorems, lemmas, corollaries, propositions**
+
 <img width="458" height="545" alt="Screenshot 2026-03-04 at 12 33 36 AM" src="https://github.com/user-attachments/assets/a7091fb8-7830-4ee9-8c6a-ebc744c5dde9" />
 
 **Page 3 — Proof (with multi-line math)**
+
 <img width="451" height="320" alt="Screenshot 2026-03-04 at 12 33 45 AM" src="https://github.com/user-attachments/assets/22176463-ec1a-451f-bd85-771a0458f71a" />
 
 ## Features
