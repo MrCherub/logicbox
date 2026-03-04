@@ -1,0 +1,80 @@
+\documentclass[12pt]{article}
+\usepackage{../logicbox}
+
+\title{Logic Box Test}
+\author{Test Author}
+
+\begin{document}
+
+\maketitle
+
+\section{Definitions}
+
+\begin{definition}{Group}{def:group}
+A \textbf{group} is a set $G$ with a binary operation $\cdot: G \times G \to G$ satisfying:
+\begin{enumerate}
+    \item Associativity: $(a \cdot b) \cdot c = a \cdot (b \cdot c)$
+    \item Identity: $\exists e \in G$ such that $e \cdot a = a \cdot e = a$
+    \item Inverse: $\forall a \in G, \exists a^{-1} \in G$ such that $a \cdot a^{-1} = a^{-1} \cdot a = e$
+\end{enumerate}
+\end{definition}
+
+\section{Theorems}
+
+\begin{axiom}{Line through two points}{ax:line}
+For any two points $A$ and $B$, there exists a line passing through both $A$ and $B$.
+\end{axiom}
+
+\begin{theorem}{Pythagorean Theorem}{thm:pythagoras}
+In a right triangle with legs $a$ and $b$ and hypotenuse $c$, we have $a^2 + b^2 = c^2$.
+\end{theorem}
+
+\begin{lemma}{Sum of Angles}{lem:angles}
+The sum of interior angles in any triangle is $180^\circ$.
+\end{lemma}
+
+\begin{corollary}{Interior Angles of Quadrilateral}{cor:quad}
+The sum of interior angles in any quadrilateral is $360^\circ$.
+\end{corollary}
+
+\begin{proposition}{Basic Proposition}{prop:even}
+If $n$ is an even integer, then $n^2$ is also even.
+\end{proposition}
+
+\begin{theorem}{My Theorem}{thm:my}
+This is a theorem with optional argument title.
+\end{theorem}
+
+\begin{axiom}{Axiom of Choice}{ax:choice}
+For any set of non-empty sets, there exists a choice function.
+\end{axiom}
+
+\begin{lemma}{Important Lemma}{lem:important}
+This is a lemma with an optional argument.
+\end{lemma}
+
+\begin{corollary}{Corollary}{cor:my}
+This is a corollary with optional title.
+\end{corollary}
+
+\begin{proposition}{Proposition}{prop:my}
+This is a proposition.
+\end{proposition}
+
+\section{Proofs}
+
+\begin{proof}
+We prove by induction that $\sum_{i=1}^n i = \frac{n(n+1)}{2}$.
+
+\textbf{Base case:} For $n=1$, $\sum_{i=1}^1 i = 1 = \frac{1(1+1)}{2}$.
+
+\textbf{Inductive step:} Assume true for $n$, then
+\begin{align*}
+\sum_{i=1}^{n+1} i
+  &= \sum_{i=1}^n i + (n+1) = \frac{n(n+1)}{2} + (n+1) \\
+  &= \frac{n(n+1) + 2(n+1)}{2} = \frac{(n+1)(n+2)}{2}.
+\end{align*}
+Thus the formula holds for $n+1$, which completes the induction.
+\end{proof}
+
+\end{document}

@@ -1,0 +1,80 @@
+\ProvidesPackage{logicbox}[2026/03/03 v2.1 Logic box theorem environments]
+\RequirePackage{tcolorbox, amssymb, xcolor, etoolbox}
+
+\tcbuselibrary{breakable, skins, theorems}
+\RequirePackage{tikz}
+\usetikzlibrary{shapes.geometric, calc}
+
+% Options
+\newif\iflogicbox@qed
+\logicbox@qedfalse
+\DeclareOption{qed}{\logicbox@qedtrue}
+\ProcessOptions\relax
+
+% Colors: same palette as dangbox and epibox (calc.tex)
+% dangbox uses blue!40!black; epibox uses green/orange/red/blue/purple/gray!50!black
+\colorlet{logicbox@def}{blue!40!black}
+\colorlet{logicbox@thm}{red!50!black}
+\colorlet{logicbox@lem}{orange!50!black}
+\colorlet{logicbox@cor}{purple!50!black}
+\colorlet{logicbox@axiom}{blue!50!black}
+\colorlet{logicbox@prop}{green!50!black}
+\colorlet{logicbox@rem}{blue!50!black}
+\colorlet{logicbox@ex}{green!50!black}
+\colorlet{logicbox@exer}{orange!50!black}
+\colorlet{logicbox@sol}{gray!50!black}
+\colorlet{logicbox@conj}{red!50!black}
+\colorlet{logicbox@property}{gray!50!black}
+\colorlet{logicbox@proof}{gray!50!black}
+
+% Rounded corners and padding (keep content inside frame)
+\tcbset{
+  logicbox style/.style={
+    enhanced, breakable,
+    colback=white, boxrule=0.5mm,
+    arc=3pt, arc is angular=false,
+    before skip=8pt, after skip=8pt,
+    fonttitle=\bfseries, coltitle=white,
+    separator sign = {.},
+    boxsep=4pt, left=6pt, right=6pt, top=6pt, bottom=6pt,
+    pad at break*=2pt,
+    overlay unbroken={
+      \path (frame.north east) ++(-5pt,-5pt)
+        node[draw, fill=white, shape=diamond, aspect=1, minimum width=6pt, minimum height=6pt, line width=0.5pt, draw=gray!50] {};
+    },
+  }
+}
+
+% Theorems (unique counters, section numbering)
+\newtcbtheorem[number within=section]{theorem}{Theorem}{logicbox style, colframe=logicbox@thm, colbacktitle=logicbox@thm}{thm}
+\newtcbtheorem[number within=section]{definition}{Definition}{logicbox style, colframe=logicbox@def, colbacktitle=logicbox@def}{def}
+\newtcbtheorem[number within=section]{lemma}{Lemma}{logicbox style, colframe=logicbox@lem, colbacktitle=logicbox@lem}{lem}
+\newtcbtheorem[number within=section]{corollary}{Corollary}{logicbox style, colframe=logicbox@cor, colbacktitle=logicbox@cor}{cor}
+\newtcbtheorem[number within=section]{axiom}{Axiom}{logicbox style, colframe=logicbox@axiom, colbacktitle=logicbox@axiom}{ax}
+\newtcbtheorem[number within=section]{proposition}{Proposition}{logicbox style, colframe=logicbox@prop, colbacktitle=logicbox@prop}{prop}
+\newtcbtheorem[number within=section]{property}{Property}{logicbox style, colframe=logicbox@property, colbacktitle=logicbox@property}{property}
+\newtcbtheorem[number within=section]{remark}{Remark}{logicbox style, colframe=logicbox@rem, colbacktitle=logicbox@rem}{rem}
+\newtcbtheorem[number within=section]{example}{Example}{logicbox style, colframe=logicbox@ex, colbacktitle=logicbox@ex}{ex}
+\newtcbtheorem[number within=section]{exercise}{Exercise}{logicbox style, colframe=logicbox@exer, colbacktitle=logicbox@exer}{exer}
+\newtcbtheorem[number within=section]{solution}{Solution}{logicbox style, colframe=logicbox@sol, colbacktitle=logicbox@sol}{sol}
+\newtcbtheorem[number within=section]{conjecture}{Conjecture}{logicbox style, colframe=logicbox@conj, colbacktitle=logicbox@conj}{conj}
+
+% Proof: smooth corners, extra padding so math/content does not stick out
+\newtcolorbox{proof}{
+  enhanced, breakable,
+  colback=white, colframe=logicbox@proof,
+  title=Proof, fonttitle=\bfseries, coltitle=white, colbacktitle=logicbox@proof,
+  boxrule=0.5mm, arc=3pt, arc is angular=false,
+  before skip=8pt, after skip=8pt,
+  boxsep=6pt, left=8pt, right=8pt, top=8pt, bottom=8pt,
+  pad at break*=2pt,
+  overlay unbroken={
+    \fill[logicbox@proof] ([xshift=-8pt]frame.east) circle (3pt);
+  },
+}
+\iflogicbox@qed
+  \AtEndEnvironment{proof}{\hfill$\square$}
+\fi
+
+% Customization
+\newcommand{\logicboxset}[1]{\tcbset{logicbox style/.append style={#1}}}
