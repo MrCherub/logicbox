@@ -7,6 +7,7 @@ A LaTeX package that provides **theorem-style boxes** (definition, theorem, lemm
 Rendered from `examples/vimtex_logicbox.tex`:
 
 **Page 1 — Definitions and title**
+
 <img width="458" height="623" alt="Screenshot 2026-03-04 at 12 33 15 AM" src="https://github.com/user-attachments/assets/3c55dd7c-e144-4c2e-9e73-85cf524d76af" />
 
 **Page 2 — Theorems, lemmas, corollaries, propositions**
