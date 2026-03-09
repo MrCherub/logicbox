@@ -24,6 +24,8 @@ Rendered from `examples/vimtex_logicbox.tex`:
 ## Features
 
 - **Environments**: `definition`, `theorem`, `lemma`, `corollary`, `axiom`, `proposition`, `property`, `remark`, `example`, `exercise`, `solution`, `conjecture`, and `proof`.
+- **Shared numbering** via the `sharedcounter` package option when you want theorem-like environments to follow one section-based sequence.
+- **Custom theorem boxes** with `\newlogicboxtheorem{<env>}{<Title>}{<color>}{<prefix>}`.
 - **Rounded corners** and padding so content (including displayed math) stays inside the frame.
 - **Color palette** aligned with [dangbox](https://github.com/MrCherub/dangbox) and **epibox**: `blue!40!black`, `green!50!black`, `red!50!black`, `orange!50!black`, `purple!50!black`, `gray!50!black`.
 - **Optional QED symbol** at the end of proofs via the `qed` package option.
@@ -33,7 +35,7 @@ Rendered from `examples/vimtex_logicbox.tex`:
 
 - **tcolorbox** (with libraries: `breakable`, `skins`, `theorems`)
 - **TikZ** and libraries: `shapes.geometric`, `calc`
-- **xcolor**, **amsmath**/**amssymb**, **etoolbox**
+- **xcolor**, **amsmath**/**amssymb**, **etoolbox**, **varwidth**
 
 ## Installation
 
@@ -71,9 +73,23 @@ Rendered from `examples/vimtex_logicbox.tex`:
 - `\begin{<env>}{<Title>}{<label>}`  
   Use an empty title `{}` if you don’t want a custom title. The second argument is the label for references.
 
-**Package option**:
+**Package options**:
 
 - `\usepackage[qed]{logicbox}` — adds a QED symbol (`\square`) at the end of every `proof` environment.
+- `\usepackage[sharedcounter]{logicbox}` — makes theorem-like environments share the theorem counter within each section.
+
+**Custom environments**:
+
+```latex
+\usepackage[qed,sharedcounter]{logicbox}
+\newlogicboxtheorem{claim}{Claim}{teal!60!black}{claim}
+
+\begin{claim}{A useful intermediate step}{claim:key}
+  This is a custom boxed claim.
+\end{claim}
+```
+
+The final argument is the label prefix used by `tcolorbox` for references.
 
 ## Customization
 
@@ -87,7 +103,11 @@ Any **tcolorbox** options accepted by the theorem style can be passed here.
 
 ## Examples
 
-The `examples/` folder contains a sample document (`vimtex_logicbox.tex`) that uses definitions, axioms, theorems, lemmas, corollaries, propositions, and a proof with multi-line math.
+The `examples/` folder contains a sample document (`vimtex_logicbox.tex`) that uses shared counters, a custom `claim` environment, definitions, axioms, theorems, lemmas, corollaries, propositions, and a proof with multi-line math.
+
+## Roadmap
+
+The longer-term direction is documented in [`PRODUCT_SPEC.md`](PRODUCT_SPEC.md). The short version is that `logicbox` should grow into an elegant math-notes workflow layer, not just a styling package.
 
 ## License
 

@@ -1,5 +1,6 @@
 \documentclass[12pt]{article}
-\usepackage{../logicbox}
+\usepackage[qed,sharedcounter]{../logicbox}
+\newlogicboxtheorem{claim}{Claim}{teal!60!black}{claim}
 
 \title{Logic Box Test}
 \author{Test Author}
@@ -60,6 +61,11 @@ This is a corollary with optional title.
 \begin{proposition}{Proposition}{prop:my}
 This is a proposition.
 \end{proposition}
+
+\begin{claim}{A Custom Claim}{claim:custom}
+This claim uses a user-defined logicbox environment and shares the same section
+counter as the theorem-style environments above.
+\end{claim}
 
 \section{Proofs}
 

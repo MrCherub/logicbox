@@ -1,5 +1,5 @@
 \ProvidesPackage{logicbox}[2026/03/03 v2.1 Logic box theorem environments]
-\RequirePackage{tcolorbox, amssymb, xcolor, etoolbox}
+\RequirePackage{tcolorbox, amssymb, xcolor, etoolbox, varwidth}
 
 \tcbuselibrary{breakable, skins, theorems}
 \RequirePackage{tikz}
@@ -8,7 +8,10 @@
 % Options
 \newif\iflogicbox@qed
 \logicbox@qedfalse
+\newif\iflogicbox@sharedcounter
+\logicbox@sharedcounterfalse
 \DeclareOption{qed}{\logicbox@qedtrue}
+\DeclareOption{sharedcounter}{\logicbox@sharedcountertrue}
 \ProcessOptions\relax
 
 % Colors: same palette as dangbox and epibox (calc.tex)
@@ -29,52 +32,104 @@
 
 % Rounded corners and padding (keep content inside frame)
 \tcbset{
-  logicbox style/.style={
-    enhanced, breakable,
-    colback=white, boxrule=0.5mm,
-    arc=3pt, arc is angular=false,
+  logicbox theorem base/.style={
+    enhanced jigsaw, breakable,
+    frame hidden, boxrule=0pt,
     before skip=8pt, after skip=8pt,
-    fonttitle=\bfseries, coltitle=white,
-    separator sign = {.},
-    boxsep=4pt, left=6pt, right=6pt, top=6pt, bottom=6pt,
+    boxsep=0pt, left=12pt, right=12pt, top=11pt, bottom=10pt,
+    arc=10pt, outer arc=10pt,
+    detach title,
+    boxed title size=copy,
+    varwidth boxed title*=-1.5cm,
+    attach boxed title to top left={xshift=10pt, yshift=-1.6mm},
+    fonttitle=\sffamily\bfseries\footnotesize,
+    separator sign none,
+    description delimiters={(}{)},
     pad at break*=2pt,
-    overlay unbroken={
-      \path (frame.north east) ++(-5pt,-5pt)
-        node[draw, fill=white, shape=diamond, aspect=1, minimum width=6pt, minimum height=6pt, line width=0.5pt, draw=gray!50] {};
+    before upper={\parindent15pt\noindent},
+  },
+  logicbox theorem color/.style={
+    colback=#1!8!white,
+    boxed title style={
+      enhanced,
+      frame hidden, boxrule=0pt,
+      colback=#1!22!white,
+      arc=14pt, outer arc=14pt,
+      left=8pt, right=8pt, top=3pt, bottom=5pt,
     },
-  }
+    coltitle=#1!20!black,
+  },
+  logicbox proof base/.style={
+    enhanced jigsaw, breakable,
+    frame hidden, boxrule=0pt,
+    colback=logicbox@proof!8!white,
+    title=Proof,
+    fonttitle=\sffamily\bfseries\footnotesize,
+    coltitle=logicbox@proof!20!black,
+    detach title,
+    boxed title size=copy,
+    attach boxed title to top left={xshift=10pt, yshift=-1.6mm},
+    boxed title style={
+      enhanced,
+      frame hidden,
+      boxrule=0pt,
+      colback=logicbox@proof!22!white,
+      arc=14pt, outer arc=14pt,
+      left=8pt, right=8pt, top=3pt, bottom=5pt,
+    },
+    arc=10pt, outer arc=10pt,
+    before skip=8pt, after skip=8pt,
+    boxsep=0pt, left=12pt, right=12pt, top=11pt, bottom=10pt,
+    pad at break*=2pt,
+    before upper={\parindent15pt\noindent},
+  },
 }
 
-% Theorems (unique counters, section numbering)
-\newtcbtheorem[number within=section]{theorem}{Theorem}{logicbox style, colframe=logicbox@thm, colbacktitle=logicbox@thm}{thm}
-\newtcbtheorem[number within=section]{definition}{Definition}{logicbox style, colframe=logicbox@def, colbacktitle=logicbox@def}{def}
-\newtcbtheorem[number within=section]{lemma}{Lemma}{logicbox style, colframe=logicbox@lem, colbacktitle=logicbox@lem}{lem}
-\newtcbtheorem[number within=section]{corollary}{Corollary}{logicbox style, colframe=logicbox@cor, colbacktitle=logicbox@cor}{cor}
-\newtcbtheorem[number within=section]{axiom}{Axiom}{logicbox style, colframe=logicbox@axiom, colbacktitle=logicbox@axiom}{ax}
-\newtcbtheorem[number within=section]{proposition}{Proposition}{logicbox style, colframe=logicbox@prop, colbacktitle=logicbox@prop}{prop}
-\newtcbtheorem[number within=section]{property}{Property}{logicbox style, colframe=logicbox@property, colbacktitle=logicbox@property}{property}
-\newtcbtheorem[number within=section]{remark}{Remark}{logicbox style, colframe=logicbox@rem, colbacktitle=logicbox@rem}{rem}
-\newtcbtheorem[number within=section]{example}{Example}{logicbox style, colframe=logicbox@ex, colbacktitle=logicbox@ex}{ex}
-\newtcbtheorem[number within=section]{exercise}{Exercise}{logicbox style, colframe=logicbox@exer, colbacktitle=logicbox@exer}{exer}
-\newtcbtheorem[number within=section]{solution}{Solution}{logicbox style, colframe=logicbox@sol, colbacktitle=logicbox@sol}{sol}
-\newtcbtheorem[number within=section]{conjecture}{Conjecture}{logicbox style, colframe=logicbox@conj, colbacktitle=logicbox@conj}{conj}
+% Theorem declaration helper. By default every environment has its own counter
+% within the current section. With the sharedcounter option, theorem-like
+% environments share the theorem counter.
+\newcommand{\logicbox@declaretheorem}[4]{%
+  \iflogicbox@sharedcounter
+    \ifstrequal{#1}{theorem}{%
+      \newtcbtheorem[number within=section]{#1}{#2}{logicbox theorem base, logicbox theorem color={#3}}{#4}%
+    }{%
+      \newtcbtheorem[use counter from=theorem]{#1}{#2}{logicbox theorem base, logicbox theorem color={#3}}{#4}%
+    }%
+  \else
+    \newtcbtheorem[number within=section]{#1}{#2}{logicbox theorem base, logicbox theorem color={#3}}{#4}%
+  \fi
+}
+
+\newcommand{\newlogicboxtheorem}[4]{%
+  \logicbox@declaretheorem{#1}{#2}{#3}{#4}%
+}
+
+% Built-in theorem environments
+\logicbox@declaretheorem{theorem}{Theorem}{logicbox@thm}{thm}
+\logicbox@declaretheorem{definition}{Definition}{logicbox@def}{def}
+\logicbox@declaretheorem{lemma}{Lemma}{logicbox@lem}{lem}
+\logicbox@declaretheorem{corollary}{Corollary}{logicbox@cor}{cor}
+\logicbox@declaretheorem{axiom}{Axiom}{logicbox@axiom}{ax}
+\logicbox@declaretheorem{proposition}{Proposition}{logicbox@prop}{prop}
+\logicbox@declaretheorem{property}{Property}{logicbox@property}{property}
+\logicbox@declaretheorem{remark}{Remark}{logicbox@rem}{rem}
+\logicbox@declaretheorem{example}{Example}{logicbox@ex}{ex}
+\logicbox@declaretheorem{exercise}{Exercise}{logicbox@exer}{exer}
+\logicbox@declaretheorem{solution}{Solution}{logicbox@sol}{sol}
+\logicbox@declaretheorem{conjecture}{Conjecture}{logicbox@conj}{conj}
 
 % Proof: smooth corners, extra padding so math/content does not stick out
 \newtcolorbox{proof}{
-  enhanced, breakable,
-  colback=white, colframe=logicbox@proof,
-  title=Proof, fonttitle=\bfseries, coltitle=white, colbacktitle=logicbox@proof,
-  boxrule=0.5mm, arc=3pt, arc is angular=false,
-  before skip=8pt, after skip=8pt,
-  boxsep=6pt, left=8pt, right=8pt, top=8pt, bottom=8pt,
-  pad at break*=2pt,
-  overlay unbroken={
-    \fill[logicbox@proof] ([xshift=-8pt]frame.east) circle (3pt);
-  },
+  logicbox proof base,
 }
 \iflogicbox@qed
   \AtEndEnvironment{proof}{\hfill$\square$}
 \fi
 
 % Customization
-\newcommand{\logicboxset}[1]{\tcbset{logicbox style/.append style={#1}}}
+\newcommand{\logicboxset}[1]{%
+  \tcbset{
+    logicbox theorem base/.append style={#1},
+    logicbox proof base/.append style={#1},
+  }%
+}
