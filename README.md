@@ -8,15 +8,18 @@ Rendered from `examples/vimtex_logicbox.tex`:
 
 **Page 1 — Definitions and title**
 
-<img width="458" height="623" alt="Screenshot 2026-03-04 at 12 33 15 AM" src="https://github.com/user-attachments/assets/3c55dd7c-e144-4c2e-9e73-85cf524d76af" />
+<img width="576" height="505" alt="Screenshot 2026-03-09 at 12 26 26 AM" src="https://github.com/user-attachments/assets/d4917e22-1fc4-462d-9e0b-293edfdc14d2" />
+
 
 **Page 2 — Theorems, lemmas, corollaries, propositions**
 
-<img width="458" height="545" alt="Screenshot 2026-03-04 at 12 33 36 AM" src="https://github.com/user-attachments/assets/a7091fb8-7830-4ee9-8c6a-ebc744c5dde9" />
+<img width="534" height="586" alt="Screenshot 2026-03-09 at 12 26 38 AM" src="https://github.com/user-attachments/assets/ab80be5f-b37f-40b7-848b-fd33badb7318" />
+
 
 **Page 3 — Proof (with multi-line math)**
 
-<img width="451" height="320" alt="Screenshot 2026-03-04 at 12 33 45 AM" src="https://github.com/user-attachments/assets/22176463-ec1a-451f-bd85-771a0458f71a" />
+<img width="545" height="298" alt="Screenshot 2026-03-09 at 12 26 49 AM" src="https://github.com/user-attachments/assets/b2fdbaef-cc67-4622-8a69-e8c6983bf700" />
+
 
 ## Features
 
